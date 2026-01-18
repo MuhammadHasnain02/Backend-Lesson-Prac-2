@@ -117,9 +117,12 @@
 
 import http from 'http'
 import fs from 'fs'
+import dotenv from 'dotenv'
+dotenv.config()
+
 
 // Define Port
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 const server = http.createServer((req , res) => {
 
