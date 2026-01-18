@@ -198,7 +198,7 @@ const server = http.createServer((req , res) => {
     switch (req.url) {
 
         case '/':
-            fs.readFile('./pages/HomePage.html' , 'utf-8' , (err , data) => {
+            fs.readFile('./index.html' , 'utf-8' , (err , data) => {
 
                 if (err) {
                     res.end('<h1>Error Loading Home Page</h1>')
@@ -237,10 +237,16 @@ const server = http.createServer((req , res) => {
         break
 
         default:
-            res.end(`
-                <h1>404 Page Not Found</h1>
-                <a href="/">Go Home</a>
-            `);
+            fs.readFile('./pages/PageNotFound.html' , 'utf-8' , (err , data) => {
+
+                if (err) {
+                    res.end('<h1>Error Loading Contact Page</h1>')
+                }
+                else {
+                    res.end(data)
+                }
+
+            })
 
     }
 
