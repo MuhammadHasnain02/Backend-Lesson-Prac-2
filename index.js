@@ -185,75 +185,134 @@
 
 // -------------------------------------------------------------
 
+// import http from 'http'
+// import fs from 'fs'
+
+// // Define Port
+// const PORT = 3000
+
+// const server = http.createServer((req , res) => {
+
+//     res.setHeader('Content-Type' , 'text/html')
+
+//     switch (req.url) {
+
+//         case '/':
+//             fs.readFile('./index.html' , 'utf-8' , (err , data) => {
+
+//                 if (err) {
+//                     res.end('<h1>Error Loading Home Page</h1>')
+//                 }
+//                 else {
+//                     res.end(data)
+//                 }
+
+//             })
+//         break
+
+//         case '/about':
+//             fs.readFile('./pages/AboutPage.html' , 'utf-8' , (err , data) => {
+
+//                 if (err) {
+//                     res.end('<h1>Error Loading About Page</h1>')
+//                 }
+//                 else {
+//                     res.end(data)
+//                 }
+
+//             })
+//         break
+
+//         case '/contact':
+//             fs.readFile('./pages/ContactPage.html' , 'utf-8' , (err , data) => {
+
+//                 if (err) {
+//                     res.end('<h1>Error Loading Contact Page</h1>')
+//                 }
+//                 else {
+//                     res.end(data)
+//                 }
+
+//             })
+//         break
+
+//         default:
+//             fs.readFile('./pages/PageNotFound.html' , 'utf-8' , (err , data) => {
+
+//                 if (err) {
+//                     res.end('<h1>Error Loading Contact Page</h1>')
+//                 }
+//                 else {
+//                     res.end(data)
+//                 }
+
+//             })
+
+//     }
+
+//     console.log(req.url)
+// })
+
+// server.listen(PORT , () => {
+//     console.log(`Server running on port ${PORT}`)
+// })
+
+// -------------------------------------------------------------
+
 import http from 'http'
 import fs from 'fs'
 
-// Define Port
-const PORT = 3000
-
 const server = http.createServer((req , res) => {
 
+    // Base path for HTML files
+    let filePath = './pages'
+
+    // Set response header
     res.setHeader('Content-Type' , 'text/html')
 
     switch (req.url) {
 
         case '/':
-            fs.readFile('./index.html' , 'utf-8' , (err , data) => {
-
-                if (err) {
-                    res.end('<h1>Error Loading Home Page</h1>')
-                }
-                else {
-                    res.end(data)
-                }
-
-            })
+            filePath += '/HomePage.html'
+            res.statusCode = 200
         break
 
         case '/about':
-            fs.readFile('./pages/AboutPage.html' , 'utf-8' , (err , data) => {
-
-                if (err) {
-                    res.end('<h1>Error Loading About Page</h1>')
-                }
-                else {
-                    res.end(data)
-                }
-
-            })
+            filePath += '/AboutPage.html'
+            res.statusCode = 200
         break
 
         case '/contact':
-            fs.readFile('./pages/ContactPage.html' , 'utf-8' , (err , data) => {
-
-                if (err) {
-                    res.end('<h1>Error Loading Contact Page</h1>')
-                }
-                else {
-                    res.end(data)
-                }
-
-            })
+            filePath += '/ContactPage.html'
+            res.statusCode = 200
         break
 
         default:
-            fs.readFile('./pages/PageNotFound.html' , 'utf-8' , (err , data) => {
-
-                if (err) {
-                    res.end('<h1>Error Loading Contact Page</h1>')
-                }
-                else {
-                    res.end(data)
-                }
-
-            })
-
+            filePath += '/PageNotFound.html'
+            res.statusCode = 404
     }
+
+    // Read and send file
+    fs.readFile(filePath , 'utf-8' , (err , data) => {
+
+        if (err) {
+            res.end('<h1>Internal Server Error!</h1>')
+        }
+        else {
+            res.end(data)
+        }
+
+    })
+
 
     console.log(req.url)
 })
+
+// Define Port
+const PORT = 3000
 
 server.listen(PORT , () => {
     console.log(`Server running on port ${PORT}`)
 })
 
+// -------------------------------------------------------------
